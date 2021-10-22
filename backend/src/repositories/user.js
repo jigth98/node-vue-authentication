@@ -19,7 +19,8 @@ async function updateUser(id, userObject) {
     try {
         const user = await User.findOneAndUpdate({ _id: id  }, {
             username: userObject.username
-        })
+        }).select('username _id')
+
         return user
     } catch (e) {
         console.error(e)
@@ -29,6 +30,8 @@ async function updateUser(id, userObject) {
 async function deleteUser(id) {
     try {
         const user = await User.findOneAndDelete({ _id: id  })
+           .select('username _id')
+
         return user
     } catch (e) {
         console.error(e)
