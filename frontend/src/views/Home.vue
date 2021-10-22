@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import client from "../lib/client";
 import { reactive, onMounted } from "vue";
+import { goToHomepage } from '../services/home'
 
 const state = reactive({
     message: "",
@@ -24,7 +24,8 @@ const state = reactive({
 
 async function loadHome() {
     try {
-        const home = await client.get("home");
+        //const home = await client.get("home");
+        const home = await goToHomepage()
         state.message = "Welcome Arthur, you've found the Holy Grail";
         state.isAuthorized = true;
     } catch (e) {

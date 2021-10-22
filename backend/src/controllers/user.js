@@ -18,7 +18,7 @@ userController.login = async function(req, res) {
             })
             res.json({ 'message': 'success', jwt })
         } else {
-            res.json({ 'error': 'userOrPasswordIncorrect' })
+            res.status(401).json({ 'error': 'userOrPasswordIncorrect' })
         }
     } catch (e) {
         console.error(e)

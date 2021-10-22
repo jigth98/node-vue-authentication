@@ -1,6 +1,6 @@
 /* eslint-disable */
 import client from "../lib/client";
-import { User, UserResponse } from "../models/user";
+import { User, UserResponse, LoggedInUser, LogoutResponse } from "../models/user";
 
 export async function signup(payload: User): Promise<UserResponse> {
     try {
@@ -16,32 +16,34 @@ export async function signup(payload: User): Promise<UserResponse> {
     }
 }
 
-export async function login(payload: User): Promise<any> {
+export async function login(payload: User): Promise<LoggedInUser> {
     try {
-        const content = await client.post("login", {
+        const content = await client.post<LoggedInUser>("login", {
             username: payload.username,
             password: payload.password,
         });
-        return content;
+
+        return content.data
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
 
-export async function logout(): Promise<any> {
+export async function logout(): Promise<LogoutResponse> {
     try {
-        const content = await client.post("logout");
-        return content;
+        const content = await client.post<LogoutResponse>("logout");
+        return content.data;
     } catch (error) {
         console.error(error);
+        throw error;
     }
 }
 
 export async function queryHome(): Promise<any> {
     try {
         const content = await client.get("home");
-        return content;
+        return content.data;
     } catch (error) {
         console.error(error);
         throw error;
